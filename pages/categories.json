@@ -1,4 +1,4 @@
-const cates = [
+[
     {
         "categoryName": "Corporate Gifts",
         "categoryCode": "CorporateGifts",
@@ -4297,5 +4297,3 @@ const cates = [
         ]
     }
 ]
-
-export default cates;
