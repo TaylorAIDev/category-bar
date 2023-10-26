@@ -5,6 +5,40 @@ import GroupIcon from '@rsuite/icons/legacy/Group';
 import MagicIcon from '@rsuite/icons/legacy/Magic';
 import GearCircleIcon from '@rsuite/icons/legacy/GearCircle';
 import React from 'react';
+import cates from './categories'
+
+const NestedSide = (data, key="0") => {
+  return data.map((item, index) => {
+    if(item.children.length >= 1) {
+      return (
+        <Nav.Menu title={item.categoryName} eventKey={key? key+"-"+index: index}>
+          {
+            NestedSide(item.children, (key? key+"-"+index: index))
+          }
+        </Nav.Menu>
+      )
+    }
+    else {
+      return (
+        <Nav.Item  eventKey={key? key+"-"+index: index}>
+          {item.categoryName}
+        </Nav.Item>
+      );
+    }
+  });
+};
+
+const NestSideBar = ({data}) => {
+  const [activeKey, setActiveKey] = React.useState('1');
+
+  return (
+    <Nav activeKey={activeKey} onSelect={setActiveKey}>
+      {NestedSide(data)}
+    </Nav>
+    )
+
+
+}
 
 
 const SideBar = () => {
@@ -21,7 +55,8 @@ const SideBar = () => {
       <hr />
       <Sidenav expanded={expanded} defaultOpenKeys={['3', '4']}>
         <Sidenav.Body>
-          <Nav activeKey={activeKey} onSelect={setActiveKey}>
+          <NestSideBar data = {cates}/>
+          {/* <Nav activeKey={activeKey} onSelect={setActiveKey}>
             <Nav.Item eventKey="1" icon={<DashboardIcon />}>
               Dashboard
             </Nav.Item>
@@ -48,7 +83,7 @@ const SideBar = () => {
                 <Nav.Item eventKey="4-5-2">Action Params</Nav.Item>
               </Nav.Menu>
             </Nav.Menu>
-          </Nav>
+          </Nav> */}
         </Sidenav.Body>
         <Sidenav.Toggle expanded={expanded} onToggle={expanded => setExpanded(expanded)} />
       </Sidenav>
